@@ -24,27 +24,38 @@
         }
     </script>
     <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #ffffff;
+            --accent-color: #00d4a0;
+            --card-bg: rgba(26, 26, 26, 0.85); /* 85% opaque dark cards */
+            --nav-bg: #0d0d0d;
+            --nav-bg-opacity: rgba(13, 13, 13, 0.9);
+            --overlay-color: transparent; /* Remove dark overlay by default */
+        }
+        
+        .light-mode {
+            --bg-color: #ffffff; /* Pure white background as per specification */
+            --text-color: #333333; /* Dark grey for better visual appeal */
+            --accent-color: #00a070;
+            --card-bg: rgba(255, 255, 255, 0.85); /* 85% opaque white cards */
+            --nav-bg: #ffffff;
+            --nav-bg-opacity: rgba(255, 255, 255, 0.95);
+            --overlay-color: transparent; /* Keep overlay transparent in light mode */
+        }
+        
         body {
-            background-color: #0d0d0d;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: 'Fira Code', monospace;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         /* Add a dark overlay to improve readability */
         .content-overlay {
             position: relative;
             z-index: 10;
-        }
-        
-        .dark-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(13, 13, 13, 0.5); /* Reduced opacity to 50% */
-            z-index: -1;
-            pointer-events: none;
         }
         
         .matrix-rain {
@@ -71,7 +82,7 @@
         }
         
         .glowing-text {
-            text-shadow: 0 0 5px #00d4a0, 0 0 10px #00d4a0, 0 0 15px #00d4a0, 0 0 20px #00d4a0;
+            text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color), 0 0 15px var(--accent-color), 0 0 20px var(--accent-color);
         }
         
         .glow-border {
@@ -81,23 +92,144 @@
         }
         
         .glow-border:hover {
-            box-shadow: 0 0 15px #00d4a0, 0 0 30px rgba(0, 212, 160, 0.7);
+            box-shadow: 0 0 15px var(--accent-color), 0 0 30px rgba(0, 212, 160, 0.7);
             border: 1px solid rgba(0, 212, 160, 0.7);
         }
         
+        .glow-border:hover {
+            box-shadow: 0 0 15px var(--accent-color), 0 0 30px rgba(0, 212, 160, 0.7);
+            border: 1px solid rgba(0, 212, 160, 0.7);
+        }
+        
+        .profile-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .profile-hover:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 160, 0.7), 0 0 30px rgba(0, 212, 160, 0.5);
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--nav-bg);
+            background-color: var(--nav-bg-opacity);
+        }
+        
+        .nav-link {
+            color: var(--text-color);
+        }
+        
+        /* Mobile Menu */
+        #mobileMenu {
+            background-color: var(--nav-bg);
+            background-color: var(--nav-bg-opacity);
+        }
+        
+        /* Cards */
         .card-shadow {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 212, 160, 0.2);
+            background-color: var(--card-bg); /* Use CSS variable for transparency */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
         }
         
+        .light-mode .card-shadow {
+            background-color: var(--card-bg); /* Use CSS variable for transparency */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eeeeee; /* Subtle border for definition */
+        }
+        
         .card-shadow:hover {
-            box-shadow: 0 15px 35px rgba(0, 212, 160, 0.4), 0 0 0 1px rgba(0, 212, 160, 0.5);
+            box-shadow: 0 15px 35px var(--accent-color), 0 0 0 1px rgba(0, 212, 160, 0.2);
             transform: translateY(-5px);
             z-index: 10;
         }
         
+        .light-mode .card-shadow:hover {
+            box-shadow: 0 15px 35px rgba(0, 160, 112, 0.2), 0 0 0 1px rgba(0, 160, 112, 0.1);
+            border: 1px solid rgba(0, 160, 112, 0.2); /* Accent border on hover */
+        }
+        
+        /* Timeline */
+        .timeline-item::before {
+            background-color: var(--accent-color);
+        }
+        
+        .timeline-line {
+            background-color: var(--accent-color);
+        }
+        
+        /* Links */
+        a {
+            color: var(--accent-color);
+        }
+        
+        /* Buttons */
+        .bg-matrix-teal {
+            background-color: var(--accent-color);
+        }
+        
+        .text-matrix-teal {
+            color: var(--accent-color);
+        }
+        
+        .border-matrix-teal {
+            border-color: var(--accent-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--nav-bg);
+        }
+        
+        /* Border styles for light mode */
+        .light-mode .border-gray-700 {
+            border-color: #cccccc; /* Darker border for better visibility */
+        }
+        
+        /* Text styles for light mode - improve readability */
+        .light-mode .text-gray-400 {
+            color: #222222; /* Much darker gray for better contrast */
+        }
+        
+        .light-mode .text-gray-300 {
+            color: #111111; /* Near black for better readability */
+        }
+        
+        /* Additional text styles for better light mode contrast */
+        .light-mode .text-gray-900 {
+            color: #000000; /* Pure black for maximum readability */
+        }
+        
+        .light-mode p {
+            color: #000000; /* Ensure all paragraphs are black in light mode */
+        }
+        
+        .light-mode li {
+            color: #000000; /* Ensure all list items are black in light mode */
+        }
+        
+        .light-mode ul {
+            color: #000000; /* Ensure all unordered lists are black in light mode */
+        }
+        
+        /* Ensure text elements use theme variables */
+        .hero-subtitle {
+            color: var(--text-color);
+        }
+        
+        .contact-text {
+            color: var(--text-color);
+        }
+        
+        .section-text {
+            color: var(--text-color);
+        }
+        
+        /* Fade in animations */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -120,51 +252,20 @@
             transform: translateY(0);
         }
         
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -10px;
-            top: 10px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: #00d4a0;
-            border: 2px solid #0d0d0d;
-        }
-        
-        .timeline-line {
-            position: absolute;
-            left: -2px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: #00d4a0;
-        }
-        
-        .nav-link {
-            position: relative;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #00d4a0;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
         /* Ensure long URLs break properly on mobile */
         .break-words {
             word-break: break-all;
             word-wrap: break-word;
             overflow-wrap: break-word;
+        }
+        
+        /* Animated typing effect for name */
+        .typing-effect {
+            overflow: hidden;
+            border-right: .15em solid var(--accent-color);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
         }
     </style>
 </head>
@@ -172,40 +273,45 @@
     <!-- Matrix Rain Background -->
     <div id="matrixRain" class="matrix-rain"></div>
     <!-- Dark overlay for better text readability -->
-    <div class="dark-overlay"></div>
+    <!-- Removed overlay as it interferes with light theme -->
     
     <!-- Navigation -->
-    <nav class="fixed w-full bg-matrix-black bg-opacity-90 backdrop-blur-sm z-50 py-4 px-6">
+    <nav class="fixed w-full backdrop-blur-sm z-50 py-4 px-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="text-matrix-teal font-bold text-xl"><a href="#home">AKG</a></div>
             <div class="hidden md:flex space-x-6 text-sm">
-                <a href="#about" class="nav-link text-white hover:text-matrix-teal transition-colors">About</a>
-                <a href="#experience" class="nav-link text-white hover:text-matrix-teal transition-colors">Experience</a>
-                <a href="#skills" class="nav-link text-white hover:text-matrix-teal transition-colors">Skills</a>
-                <a href="#education" class="nav-link text-white hover:text-matrix-teal transition-colors">Education</a>
-                <a href="#certifications" class="nav-link text-white hover:text-matrix-teal transition-colors">Certifications</a>
-                <a href="#publications" class="nav-link text-white hover:text-matrix-teal transition-colors">Publications</a>
-                <a href="#languages" class="nav-link text-white hover:text-matrix-teal transition-colors">Languages</a>
-                <a href="#volunteering" class="nav-link text-white hover:text-matrix-teal transition-colors">Volunteering</a>
-                <a href="#contact" class="nav-link text-white hover:text-matrix-teal transition-colors">Contact</a>
+                <a href="#about" class="nav-link hover:text-matrix-teal transition-colors font-bold">About</a>
+                <a href="#experience" class="nav-link hover:text-matrix-teal transition-colors font-bold">Experience</a>
+                <a href="#skills" class="nav-link hover:text-matrix-teal transition-colors font-bold">Skills</a>
+                <a href="#education" class="nav-link hover:text-matrix-teal transition-colors font-bold">Education</a>
+                <a href="#certifications" class="nav-link hover:text-matrix-teal transition-colors font-bold">Certifications</a>
+                <a href="#publications" class="nav-link hover:text-matrix-teal transition-colors font-bold">Publications</a>
+                <a href="#languages" class="nav-link hover:text-matrix-teal transition-colors font-bold">Languages</a>
+                <a href="#volunteering" class="nav-link hover:text-matrix-teal transition-colors font-bold">Volunteering</a>
+                <a href="#contact" class="nav-link hover:text-matrix-teal transition-colors font-bold">Contact</a>
             </div>
-            <button id="menuButton" class="md:hidden text-matrix-teal">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
+            <div class="flex items-center space-x-4">
+                <button id="themeToggle" class="text-matrix-teal">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="menuButton" class="md:hidden text-matrix-teal">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-matrix-black bg-opacity-95 py-4 px-6 absolute top-full left-0 right-0">
+        <div id="mobileMenu" class="hidden md:hidden py-4 px-6 absolute top-full left-0 right-0">
             <div class="flex flex-col space-y-3 text-sm">
-                <a href="#about" class="text-white hover:text-matrix-teal transition-colors">About</a>
-                <a href="#experience" class="text-white hover:text-matrix-teal transition-colors">Experience</a>
-                <a href="#skills" class="text-white hover:text-matrix-teal transition-colors">Skills</a>
-                <a href="#education" class="text-white hover:text-matrix-teal transition-colors">Education</a>
-                <a href="#certifications" class="text-white hover:text-matrix-teal transition-colors">Certifications</a>
-                <a href="#publications" class="text-white hover:text-matrix-teal transition-colors">Publications</a>
-                <a href="#languages" class="text-white hover:text-matrix-teal transition-colors">Languages</a>
-                <a href="#volunteering" class="text-white hover:text-matrix-teal transition-colors">Volunteering</a>
-                <a href="#contact" class="text-white hover:text-matrix-teal transition-colors">Contact</a>
+                <a href="#about" class="nav-link hover:text-matrix-teal transition-colors font-bold">About</a>
+                <a href="#experience" class="nav-link hover:text-matrix-teal transition-colors font-bold">Experience</a>
+                <a href="#skills" class="nav-link hover:text-matrix-teal transition-colors font-bold">Skills</a>
+                <a href="#education" class="nav-link hover:text-matrix-teal transition-colors font-bold">Education</a>
+                <a href="#certifications" class="nav-link hover:text-matrix-teal transition-colors font-bold">Certifications</a>
+                <a href="#publications" class="nav-link hover:text-matrix-teal transition-colors font-bold">Publications</a>
+                <a href="#languages" class="nav-link hover:text-matrix-teal transition-colors font-bold">Languages</a>
+                <a href="#volunteering" class="nav-link hover:text-matrix-teal transition-colors font-bold">Volunteering</a>
+                <a href="#contact" class="nav-link hover:text-matrix-teal transition-colors font-bold">Contact</a>
             </div>
         </div>
     </nav>
@@ -213,8 +319,9 @@
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex flex-col justify-center items-center relative pt-16 px-4">
         <div class="text-center z-10">
-            <h1 id="nameText" class="text-4xl md:text-6xl font-bold mb-4 glowing-text">ASISH KUMAR GHOSH</h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8">Technical Product Manager | Data Analyst</p>
+            <img src="images/profile.png" alt="Asish Kumar Ghosh" class="w-48 h-48 rounded-full mx-auto mb-6 object-cover border-4 border-matrix-teal shadow-lg shadow-matrix-teal/30 profile-hover">
+            <h1 id="nameText" class="text-4xl md:text-6xl font-bold mb-4 glowing-text section-text typing-effect">ASISH KUMAR GHOSH</h1>
+            <p class="text-xl md:text-2xl hero-subtitle mb-8">Technical Product Manager | Data Analyst</p>
             <div class="flex justify-center space-x-6 mt-8">
                 <a href="#about" class="bg-matrix-teal text-matrix-black px-6 py-3 rounded-lg font-bold hover:bg-teal-400 transition-colors">
                     View My Work
@@ -235,7 +342,7 @@
     <section id="about" class="py-12 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-matrix-teal fade-in">ABOUT ME</h2>
-            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow">
+            <div class="p-8 rounded-xl card-shadow">
                 <p class="text-lg fade-in">
                     Product Manager with over 4 years of progressive experience across analytics, frontend development, QA, and product strategy. Proven track record in leading cross-functional teams to deliver data-driven and customer-focused solutions in e-commerce and tech. Skilled in managing agile processes (Scrum, Kanban), analyzing user needs, and executing platform strategies.
                 </p>
@@ -254,22 +361,22 @@
                 <!-- Experience Item 1 -->
                 <div class="relative pl-8 pb-12 fade-in">
                     <div class="timeline-item">
-                        <div class="bg-gray-900 bg-opacity-80 p-6 rounded-xl card-shadow">
+                        <div class="p-6 rounded-xl card-shadow">
                             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                                 <h3 class="text-xl font-bold text-matrix-teal">JUNIOR PRODUCT MANAGER</h3>
                                 <span class="text-matrix-teal font-mono">Aug 2023 - Present</span>
                             </div>
-                            <h4 class="text-lg font-semibold mb-4">About You SE & Co. KG, Hamburg (Germany)</h4>
+                            <h4 class="text-lg font-semibold mb-4 section-text">About You SE & Co. KG, Hamburg (Germany)</h4>
                             <ul class="list-disc pl-5 space-y-2">
                                 <li>Drove the development of the Partner Portal, a B2B platform enabling 600+ partners to manage operations and access KPIs and performance data via a dedicated UI.</li>
                                 <li>Lead agile product lifecycle processes using Scrum, including backlog prioritization and stakeholder alignment.</li>
                                 <li>Oversee task management, driving sprint planning, reviews, and timely delivery of impactful solutions.</li>
                             </ul>
-                            <div class="mt-4 p-3 bg-matrix-black bg-opacity-20 rounded-lg border border-matrix-teal border-opacity-20">
+                            <div class="mt-4 p-3 rounded-lg border border-matrix-teal border-opacity-20">
                                 <p class="font-mono text-sm text-matrix-teal font-bold">
                                     <i class="fas fa-tools mr-2"></i>Tools and Technologies:
                                 </p>
-                                <p class="mt-1 font-mono text-sm text-gray-300">
+                                <p class="mt-1 font-mono text-sm">
                                     Jira, Confluence, Python, AWS, Data-Driven Decision Making, SQL, Usability Studies, Figma, A/B Testing
                                 </p>
                             </div>
@@ -280,21 +387,21 @@
                 <!-- Experience Item 2 -->
                 <div class="relative pl-8 pb-12 fade-in">
                     <div class="timeline-item">
-                        <div class="bg-gray-900 bg-opacity-80 p-6 rounded-xl card-shadow">
+                        <div class="p-6 rounded-xl card-shadow">
                             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                                 <h3 class="text-xl font-bold text-matrix-teal">PRODUCT MANAGER, WERKSTUDENT</h3>
                                 <span class="text-matrix-teal font-mono">Jun 2022 - July 2023</span>
                             </div>
-                            <h4 class="text-lg font-semibold mb-4">About You SE & Co. KG</h4>
+                            <h4 class="text-lg font-semibold mb-4 section-text">About You SE & Co. KG</h4>
                             <ul class="list-disc pl-5 space-y-2">
                                 <li>Played a key role in shaping and executing the product strategy for the CMS platform, working closely with cross-functional teams.</li>
                                 <li>Created and tracked tasks and projects using Jira, also facilitated sprint planning and review meetings.</li>
                             </ul>
-                            <div class="mt-4 p-3 bg-matrix-black bg-opacity-20 rounded-lg border border-matrix-teal border-opacity-20">
+                            <div class="mt-4 p-3 rounded-lg border border-matrix-teal border-opacity-20">
                                 <p class="font-mono text-sm text-matrix-teal font-bold">
                                     <i class="fas fa-tools mr-2"></i>Tools and Technologies:
                                 </p>
-                                <p class="mt-1 font-mono text-sm text-gray-300">
+                                <p class="mt-1 font-mono text-sm">
                                     Jira, Confluence, Figma, A/B Testing, Data-Driven Decision Making
                                 </p>
                             </div>
@@ -305,22 +412,22 @@
                 <!-- Experience Item 3 -->
                 <div class="relative pl-8 pb-12 fade-in">
                     <div class="timeline-item">
-                        <div class="bg-gray-900 bg-opacity-80 p-6 rounded-xl card-shadow">
+                        <div class="p-6 rounded-xl card-shadow">
                             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                                 <h3 class="text-xl font-bold text-matrix-teal">DATA ANALYST, WERKSTUDENT</h3>
                                 <span class="text-matrix-teal font-mono">Jun 2021 - May 2022</span>
                             </div>
-                            <h4 class="text-lg font-semibold mb-4">About You SE & Co. KG</h4>
+                            <h4 class="text-lg font-semibold mb-4 section-text">About You SE & Co. KG</h4>
                             <ul class="list-disc pl-5 space-y-2">
                                 <li>Implementation of quantitative analyses, particularly for the efficiency of individual marketing campaigns.</li>
                                 <li>Implemented interactive dashboards that delivered real-time performance insights, reducing manual data processing time by over 30% and accelerating decision-making.</li>
                                 <li>Collaborate with cross-functional teams to support data-driven decision-making.</li>
                             </ul>
-                            <div class="mt-4 p-3 bg-matrix-black bg-opacity-20 rounded-lg border border-matrix-teal border-opacity-20">
+                            <div class="mt-4 p-3 rounded-lg border border-matrix-teal border-opacity-20">
                                 <p class="font-mono text-sm text-matrix-teal font-bold">
                                     <i class="fas fa-tools mr-2"></i>Tools and Technologies:
                                 </p>
-                                <p class="mt-1 font-mono text-sm text-gray-300">
+                                <p class="mt-1 font-mono text-sm">
                                     SQL, Python (Pandas, NumPy, Matplotlib), Google Data Studio, Tableau, Excel, BigQuery
                                 </p>
                             </div>
@@ -331,22 +438,22 @@
                 <!-- Experience Item 4 -->
                 <div class="relative pl-8 pb-12 fade-in">
                     <div class="timeline-item">
-                        <div class="bg-gray-900 bg-opacity-80 p-6 rounded-xl card-shadow">
+                        <div class="p-6 rounded-xl card-shadow">
                             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                                 <h3 class="text-xl font-bold text-matrix-teal">QUALITY ASSURANCE, WERKSTUDENT</h3>
                                 <span class="text-matrix-teal font-mono">Dec 2019 - May 2021</span>
                             </div>
-                            <h4 class="text-lg font-semibold mb-4">About You SE & Co. KG</h4>
+                            <h4 class="text-lg font-semibold mb-4 section-text">About You SE & Co. KG</h4>
                             <ul class="list-disc pl-5 space-y-2">
                                 <li>Worked in the Cloud Panel team, ensuring the product functioned reliably and as expected through rigorous testing and validation.</li>
                                 <li>Reduced product bugs by 20% by improving the test coverage through automation scripts.</li>
                                 <li>Created detailed bug reports and collaborated with developers to ensure timely resolution and backlog grooming.</li>
                             </ul>
-                            <div class="mt-4 p-3 bg-matrix-black bg-opacity-20 rounded-lg border border-matrix-teal border-opacity-20">
+                            <div class="mt-4 p-3 rounded-lg border border-matrix-teal border-opacity-20">
                                 <p class="font-mono text-sm text-matrix-teal font-bold">
                                     <i class="fas fa-tools mr-2"></i>Tools and Technologies:
                                 </p>
-                                <p class="mt-1 font-mono text-sm text-gray-300">
+                                <p class="mt-1 font-mono text-sm">
                                     Cypress, Cucumber, TestRail, Jira, Git, GitLab CI/CD
                                 </p>
                             </div>
@@ -357,21 +464,21 @@
                 <!-- Experience Item 5 -->
                 <div class="relative pl-8 pb-12 fade-in">
                     <div class="timeline-item">
-                        <div class="bg-gray-900 bg-opacity-80 p-6 rounded-xl card-shadow">
+                        <div class="p-6 rounded-xl card-shadow">
                             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                                 <h3 class="text-xl font-bold text-matrix-teal">JUNIOR FRONTEND DEVELOPER</h3>
                                 <span class="text-matrix-teal font-mono">May 2017 - Aug 2019</span>
                             </div>
-                            <h4 class="text-lg font-semibold mb-4">Code Surfer, Dhaka (Bangladesh)</h4>
+                            <h4 class="text-lg font-semibold mb-4 section-text">Code Surfer, Dhaka (Bangladesh)</h4>
                             <ul class="list-disc pl-5 space-y-2">
                                 <li>Developed user-friendly interfaces that improved customer experience and increased engagement across client platforms.</li>
                                 <li>Created custom web crawlers to gather data from 100+ sites, boosting the effectiveness of digital marketing campaigns and enabling smarter targeting.</li>
                             </ul>
-                            <div class="mt-4 p-3 bg-matrix-black bg-opacity-20 rounded-lg border border-matrix-teal border-opacity-20">
+                            <div class="mt-4 p-3 rounded-lg border border-matrix-teal border-opacity-20">
                                 <p class="font-mono text-sm text-matrix-teal font-bold">
                                     <i class="fas fa-tools mr-2"></i>Tools and Technologies:
                                 </p>
-                                <p class="mt-1 font-mono text-sm text-gray-300">
+                                <p class="mt-1 font-mono text-sm">
                                     HTML5, CSS3, Bootstrap, JavaScript, Git, Cron Jobs
                                 </p>
                             </div>
@@ -389,7 +496,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Product & Agile Tools -->
-                <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+                <div class="p-8 rounded-xl card-shadow fade-in">
                     <h3 class="text-2xl font-bold text-matrix-teal mb-4">Product & Agile Tools</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Jira</span>
@@ -403,7 +510,7 @@
                 </div>
                 
                 <!-- Tech & Dev -->
-                <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+                <div class="p-8 rounded-xl card-shadow fade-in">
                     <h3 class="text-2xl font-bold text-matrix-teal mb-4">Tech & Dev</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Python</span>
@@ -417,7 +524,7 @@
                 </div>
                 
                 <!-- Data & Analytics -->
-                <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+                <div class="p-8 rounded-xl card-shadow fade-in">
                     <h3 class="text-2xl font-bold text-matrix-teal mb-4">Data & Analytics</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">SQL</span>
@@ -434,7 +541,7 @@
                 </div>
                 
                 <!-- Automation & QA -->
-                <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+                <div class="p-8 rounded-xl card-shadow fade-in">
                     <h3 class="text-2xl font-bold text-matrix-teal mb-4">Automation & QA</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Cypress</span>
@@ -444,7 +551,7 @@
                 </div>
                 
                 <!-- Other Tools -->
-                <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in md:col-span-2">
+                <div class="p-8 rounded-xl card-shadow fade-in md:col-span-2">
                     <h3 class="text-2xl font-bold text-matrix-teal mb-4">Other Tools</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Git</span>
@@ -465,10 +572,10 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- MSc -->
-                <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+                <div class="p-8 rounded-xl card-shadow fade-in">
                     <h3 class="text-2xl font-bold text-matrix-teal mb-2">M.Sc. in Information and Communication Systems</h3>
                     <p class="text-lg font-semibold mb-2">Technische Universität Hamburg, Hamburg (Germany)</p>
-                    <p class="font-mono text-gray-400 mb-2">2019 - 2023</p>
+                    <p class="font-mono section-text mb-2">2019 - 2023</p>
                     <ul class="list-disc pl-5 space-y-2 mt-4">
                         <li>Master’s Project: A Neural-Network-Based Approach for an Anime Recommender System.</li>
                         <li>Master’s Thesis: Optimizing Vessel Arrival Time Predictions with Machine Learning Feature Selection.</li>
@@ -476,10 +583,10 @@
                 </div>
                 
                 <!-- BSc -->
-                <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+                <div class="p-8 rounded-xl card-shadow fade-in">
                     <h3 class="text-2xl font-bold text-matrix-teal mb-2">B.Sc. in Computer Science and Engineering</h3>
                     <p class="text-lg font-semibold mb-2">Rajshahi University of Engineering and Technology, Rajshahi (Bangladesh)</p>
-                    <p class="font-mono text-gray-400 mb-2">2013 - 2017</p>
+                    <p class="font-mono section-text mb-2">2013 - 2017</p>
                     <ul class="list-disc pl-5 space-y-2 mt-4">
                         <li>Bachelor Thesis: Optical Character Recognition for Bangla Handwritten Characters Using Machine Learning Algorithms.</li>
                     </ul>
@@ -492,7 +599,7 @@
     <section id="certifications" class="py-12 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-matrix-teal fade-in">CERTIFICATIONS & TRAINING</h2>
-            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+            <div class="p-8 rounded-xl card-shadow fade-in">
                 <ul class="space-y-6">
                     <li class="flex items-start">
                         <i class="fas fa-certificate text-matrix-teal mt-1 mr-3"></i>
@@ -521,7 +628,7 @@
     <section id="publications" class="py-12 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-matrix-teal fade-in">PUBLICATION</h2>
-            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+            <div class="p-8 rounded-xl card-shadow fade-in">
                 <blockquote class="border-l-4 border-matrix-teal pl-4 italic">
                     <p class="mb-4">
                         Ghosh, A. K., & Afroge, S. (2017). A comparison between Support Vector Machine (SVM) and bootstrap aggregating technique for recognizing Bangla handwritten characters. In 2017 20th International Conference of Computer and Information Technology (ICCIT) (pp. 1–5). IEEE.
@@ -538,7 +645,7 @@
     <section id="languages" class="py-12 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-matrix-teal fade-in">LANGUAGES</h2>
-            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+            <div class="p-8 rounded-xl card-shadow fade-in">
                 <ul class="space-y-4">
                     <li class="flex justify-between border-b border-gray-700 pb-2">
                         <span>English</span>
@@ -561,10 +668,10 @@
     <section id="volunteering" class="py-12 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-matrix-teal fade-in">VOLUNTEERING</h2>
-            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+            <div class="p-8 rounded-xl card-shadow fade-in">
                 <div>
-                    <h3 class="text-xl font-bold mb-2">President, Student Association of Bangladesh</h3>
-                    <p class="text-gray-400 mb-2">TU Hamburg</p>
+                    <h3 class="text-xl font-bold mb-2 section-text">President, Student Association of Bangladesh</h3>
+                    <p class="section-text mb-2">TU Hamburg</p>
                     <p>
                         Led community engagement and student welfare efforts; organized events and supported international students in adapting to academic and cultural life in Germany.
                     </p>
@@ -578,13 +685,13 @@
         <div class="max-w-4xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-matrix-teal fade-in">CONTACT</h2>
             
-            <div class="bg-gray-900 bg-opacity-80 p-8 rounded-xl card-shadow fade-in">
+            <div class="p-8 rounded-xl card-shadow fade-in">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="flex items-center">
                         <i class="fas fa-envelope text-matrix-teal text-2xl mr-4"></i>
                         <div>
-                            <h3 class="font-bold">Email</h3>
-                            <a href="mailto:asishkghosh.tuhh@gmail.com" class="text-gray-300 hover:text-matrix-teal transition-colors">
+                            <h3 class="font-bold section-text">Email</h3>
+                            <a href="mailto:asishkghosh.tuhh@gmail.com" class="contact-text hover:text-matrix-teal transition-colors">
                                 asishkghosh.tuhh@gmail.com
                             </a>
                         </div>
@@ -593,8 +700,8 @@
                     <div class="flex items-center">
                         <i class="fab fa-linkedin text-matrix-teal text-2xl mr-4"></i>
                         <div>
-                            <h3 class="font-bold">LinkedIn</h3>
-                            <a href="https://www.linkedin.com/in/asish-kumar-ghosh/" target="_blank" class="text-gray-300 hover:text-matrix-teal transition-colors">
+                            <h3 class="font-bold section-text">LinkedIn</h3>
+                            <a href="https://www.linkedin.com/in/asish-kumar-ghosh/" target="_blank" class="contact-text hover:text-matrix-teal transition-colors">
                                 linkedin.com/in/asish-kumar-ghosh
                             </a>
                         </div>
@@ -605,15 +712,48 @@
     </section>
     
     <!-- Footer -->
-    <footer class="py-6 px-4 bg-matrix-black">
+    <footer class="py-6 px-4">
         <div class="max-w-4xl mx-auto text-center">
-            <p class="text-gray-400 text-sm">© 2025 Asish Kumar Ghosh</p>
+            <p class="section-text text-sm">© 2025 Asish Kumar Ghosh</p>
         </div>
     </footer>
     
     <script>
         // Matrix Rain Effect
         document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const body = document.body;
+            
+            // Check for saved theme preference or respect OS preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+                body.classList.add('light-mode');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('light-mode');
+                
+                if (body.classList.contains('light-mode')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'dark');
+                }
+                
+                // Redraw canvas to reflect theme change
+                draw();
+            });
+            
+            // Initialize canvas with correct background based on theme
             const canvas = document.createElement('canvas');
             const matrixRain = document.getElementById('matrixRain');
             matrixRain.appendChild(canvas);
@@ -624,8 +764,17 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             
+            // Set initial canvas background based on theme
+            const isLightMode = body.classList.contains('light-mode');
+            if (isLightMode) {
+                ctx.fillStyle = '#ffffff';
+            } else {
+                ctx.fillStyle = '#0d0d0d';
+            }
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
             // Matrix characters
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンঅআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহংঃ";
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*アァカサタナハマヤヤラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンঅআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহংঃ";
             const charArray = chars.split('');
             
             const fontSize = 18; // Keep font size at 18px
@@ -664,9 +813,29 @@
             
             // Draw function
             function draw() {
+                // Check if light mode is active
+                const isLightMode = document.body.classList.contains('light-mode');
+                
                 // Clear the entire canvas on each frame to prevent trails
-                ctx.fillStyle = '#0d0d0d';
+                // Use appropriate background color based on theme
+                if (isLightMode) {
+                    ctx.fillStyle = '#ffffff'; // White background for light mode
+                } else {
+                    ctx.fillStyle = '#0d0d0d'; // Dark background for dark mode
+                }
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Set character colors based on theme
+                let firstCharColor, trailCharColor;
+                if (isLightMode) {
+                    firstCharColor = 'rgba(144, 238, 144, 0.8)'; // Light green for light mode
+                    ctx.shadowColor = 'rgba(144, 238, 144, 0.5)';
+                    trailCharColor = 'rgba(144, 238, 144, '; // Base color for trail
+                } else {
+                    firstCharColor = 'rgba(0, 255, 180, 0.8)'; // Bright teal for dark mode
+                    ctx.shadowColor = 'rgba(0, 255, 180, 0.5)';
+                    trailCharColor = 'rgba(0, 220, 170, '; // Base color for trail
+                }
                 
                 for (let i = 0; i < streams.length; i++) {
                     const stream = streams[i];
@@ -683,14 +852,13 @@
                             
                             // Make the first character brighter with glow effect
                             if (j === 0) {
-                                // Increased opacity for better visibility on mobile
-                                ctx.fillStyle = 'rgba(0, 255, 180, 0.8)';
-                                ctx.shadowColor = 'rgba(0, 255, 180, 0.5)';
+                                // Increased opacity for better visibility
+                                ctx.fillStyle = firstCharColor;
                                 ctx.shadowBlur = 6;
                             } else {
-                                // More visible fade out effect for trailing characters with adjusted opacity for mobile
+                                // More visible fade out effect for trailing characters
                                 const opacity = Math.max(0.05, 0.5 - (j * 0.03));
-                                ctx.fillStyle = `rgba(0, 220, 170, ${opacity})`;
+                                ctx.fillStyle = trailCharColor + opacity + ')';
                                 ctx.shadowBlur = 0; // No shadow for trailing characters
                             }
                             
@@ -734,6 +902,8 @@
             window.addEventListener('resize', function() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
+                // Redraw canvas on resize to maintain quality
+                draw();
             });
             
             // Mobile menu toggle
@@ -815,6 +985,25 @@
                 const glowValue = Math.round(glowIntensity);
                 nameText.style.textShadow = `0 0 ${glowValue}px #00d4a0, 0 0 ${glowValue*2}px #00d4a0, 0 0 ${glowValue*3}px #00d4a0, 0 0 ${glowValue*4}px #00d4a0`;
             }, 200);
+            
+            // Animated typing effect for name
+            const nameElement = document.getElementById('nameText');
+            const nameTextContent = nameElement.textContent;
+            nameElement.textContent = '';
+            
+            let i = 0;
+            const typingSpeed = 100; // milliseconds per character
+            
+            function typeWriter() {
+                if (i < nameTextContent.length) {
+                    nameElement.textContent += nameTextContent.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, typingSpeed);
+                }
+            }
+            
+            // Start typing effect after a short delay
+            setTimeout(typeWriter, 1000);
         });
     </script>
 </body>
