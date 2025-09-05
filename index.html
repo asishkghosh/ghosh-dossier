@@ -34,6 +34,7 @@
             --overlay-color: transparent; /* Remove dark overlay by default */
         }
         
+        /* Dark mode is now the default - removed light-mode as separate class */
         .light-mode {
             --bg-color: #ffffff; /* Pure white background as per specification */
             --text-color: #333333; /* Dark grey for better visual appeal */
@@ -44,6 +45,7 @@
             --overlay-color: transparent; /* Keep overlay transparent in light mode */
         }
         
+        /* Set dark mode as default */
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -266,6 +268,60 @@
             white-space: nowrap;
             margin: 0 auto;
             letter-spacing: .15em;
+            /* Add responsive font sizing */
+            font-size: 2.5rem; /* Default size for smaller screens */
+        }
+        
+        /* Larger font size for medium screens and up */
+        @media (min-width: 768px) {
+            .typing-effect {
+                font-size: 3.75rem; /* md:text-6xl equivalent */
+            }
+        }
+        
+        /* Extra large screens */
+        @media (min-width: 1024px) {
+            .typing-effect {
+                font-size: 3.75rem; /* Keep xl size for larger screens */
+            }
+        }
+        
+        /* Ensure the name fits on small screens */
+        @media (max-width: 480px) {
+            .typing-effect {
+                font-size: 2rem; /* Smaller font for very small screens */
+                letter-spacing: 0.1em; /* Reduce letter spacing on small screens */
+            }
+        }
+        
+        /* Static name styling (no typing effect) */
+        #nameText {
+            font-size: 1.875rem; /* text-3xl equivalent */
+            white-space: normal; /* Allow wrapping on small screens */
+            word-break: break-word; /* Break long words if needed */
+        }
+        
+        @media (min-width: 640px) {
+            #nameText {
+                font-size: 2.25rem; /* sm:text-4xl equivalent */
+            }
+        }
+        
+        @media (min-width: 768px) {
+            #nameText {
+                font-size: 3rem; /* md:text-5xl equivalent */
+            }
+        }
+        
+        /* Adjust hero section for better mobile spacing */
+        #home {
+            padding-top: 4rem; /* Reduced padding on mobile */
+        }
+        
+        @media (min-width: 768px) {
+            #home {
+                padding-top: 4rem;
+            }
         }
     </style>
 </head>
@@ -276,7 +332,7 @@
     <!-- Removed overlay as it interferes with light theme -->
     
     <!-- Navigation -->
-    <nav class="fixed w-full backdrop-blur-sm z-50 py-4 px-6">
+    <nav class="fixed w-full backdrop-blur-sm z-50 py-4 px-4 md:px-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="text-matrix-teal font-bold text-xl"><a href="#home">AKG</a></div>
             <div class="hidden md:flex space-x-6 text-sm">
@@ -301,32 +357,32 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden py-4 px-6 absolute top-full left-0 right-0">
-            <div class="flex flex-col space-y-3 text-sm">
-                <a href="#about" class="nav-link hover:text-matrix-teal transition-colors font-bold">About</a>
-                <a href="#experience" class="nav-link hover:text-matrix-teal transition-colors font-bold">Experience</a>
-                <a href="#skills" class="nav-link hover:text-matrix-teal transition-colors font-bold">Skills</a>
-                <a href="#education" class="nav-link hover:text-matrix-teal transition-colors font-bold">Education</a>
-                <a href="#certifications" class="nav-link hover:text-matrix-teal transition-colors font-bold">Certifications</a>
-                <a href="#publications" class="nav-link hover:text-matrix-teal transition-colors font-bold">Publications</a>
-                <a href="#languages" class="nav-link hover:text-matrix-teal transition-colors font-bold">Languages</a>
-                <a href="#volunteering" class="nav-link hover:text-matrix-teal transition-colors font-bold">Volunteering</a>
-                <a href="#contact" class="nav-link hover:text-matrix-teal transition-colors font-bold">Contact</a>
+        <div id="mobileMenu" class="hidden md:hidden py-4 px-6 absolute top-full left-0 right-0 z-50">
+            <div class="flex flex-col space-y-3 text-sm bg-matrix-black bg-opacity-95 py-4 rounded-lg">
+                <a href="#about" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">About</a>
+                <a href="#experience" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Experience</a>
+                <a href="#skills" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Skills</a>
+                <a href="#education" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Education</a>
+                <a href="#certifications" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Certifications</a>
+                <a href="#publications" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Publications</a>
+                <a href="#languages" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Languages</a>
+                <a href="#volunteering" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Volunteering</a>
+                <a href="#contact" class="nav-link hover:text-matrix-teal transition-colors font-bold py-2 px-4 rounded hover:bg-gray-800">Contact</a>
             </div>
         </div>
     </nav>
     
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex flex-col justify-center items-center relative pt-16 px-4">
-        <div class="text-center z-10">
-            <img src="images/profile.png" alt="Asish Kumar Ghosh" class="w-48 h-48 rounded-full mx-auto mb-6 object-cover border-4 border-matrix-teal shadow-lg shadow-matrix-teal/30 profile-hover">
-            <h1 id="nameText" class="text-4xl md:text-6xl font-bold mb-4 glowing-text section-text typing-effect">ASISH KUMAR GHOSH</h1>
-            <p class="text-xl md:text-2xl hero-subtitle mb-8">Technical Product Manager | Data Analyst</p>
-            <div class="flex justify-center space-x-6 mt-8">
-                <a href="#about" class="bg-matrix-teal text-matrix-black px-6 py-3 rounded-lg font-bold hover:bg-teal-400 transition-colors">
+        <div class="text-center z-10 w-full">
+            <img src="images/profile.png" alt="Asish Kumar Ghosh" class="w-32 h-32 md:w-48 md:h-48 rounded-full mx-auto mb-6 object-cover border-4 border-matrix-teal shadow-lg shadow-matrix-teal/30 profile-hover">
+            <h1 id="nameText" class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 glowing-text section-text">ASISH KUMAR GHOSH</h1>
+            <p class="text-lg md:text-xl hero-subtitle mb-8">Technical Product Manager | Data Analyst</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+                <a href="#about" class="bg-matrix-teal text-matrix-black px-6 py-3 rounded-lg font-bold hover:bg-teal-400 transition-colors text-center">
                     View My Work
                 </a>
-                <a href="#contact" class="border-2 border-matrix-teal text-matrix-teal px-6 py-3 rounded-lg font-bold hover:bg-matrix-teal hover:text-matrix-black transition-colors">
+                <a href="#contact" class="border-2 border-matrix-teal text-matrix-teal px-6 py-3 rounded-lg font-bold hover:bg-matrix-teal hover:text-matrix-black transition-colors text-center">
                     Contact Me
                 </a>
             </div>
@@ -517,7 +573,7 @@
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">C</span>
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">HTML5</span>
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">CSS3</span>
-                        <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">JavaScript</span>
+                        <span class="bg-matrix-teal text-matrix-black px-33 py-1 rounded-full text-sm">JavaScript</span>
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Bootstrap</span>
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">R</span>
                     </div>
@@ -536,7 +592,7 @@
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">A/B Testing</span>
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Data-Driven Decision</span>
                         <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Tableau</span>
-                        <span class="bg-matrix-teal text-matrix-black px-3 py-1 rounded-full text-sm">Google Data Studio</span>
+                        <span class="bg-matrix-teal text-matrix-black px-33 py-1 rounded-full text-sm">Google Data Studio</span>
                     </div>
                 </div>
                 
@@ -721,82 +777,65 @@
     <script>
         // Matrix Rain Effect
         document.addEventListener('DOMContentLoaded', function() {
-            // Theme toggle functionality
+            // Theme toggle functionality - Dark mode is now default
             const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = themeToggle.querySelector('i');
             const body = document.body;
+            const icon = themeToggle.querySelector('i');
             
-            // Check for saved theme preference or respect OS preference
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            // Check for saved theme preference or default to dark mode
+            const currentTheme = localStorage.getItem('theme');
             
-            if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+            if (currentTheme === 'light') {
                 body.classList.add('light-mode');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                // Dark mode is default - ensure classes are set correctly
+                body.classList.remove('light-mode');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
             
-            themeToggle.addEventListener('click', () => {
+            themeToggle.addEventListener('click', function() {
                 body.classList.toggle('light-mode');
                 
                 if (body.classList.contains('light-mode')) {
-                    themeIcon.classList.remove('fa-moon');
-                    themeIcon.classList.add('fa-sun');
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
                     localStorage.setItem('theme', 'light');
                 } else {
-                    themeIcon.classList.remove('fa-sun');
-                    themeIcon.classList.add('fa-moon');
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
                     localStorage.setItem('theme', 'dark');
                 }
-                
-                // Redraw canvas to reflect theme change
-                draw();
             });
             
-            // Initialize canvas with correct background based on theme
+            // Matrix rain initialization
             const canvas = document.createElement('canvas');
-            const matrixRain = document.getElementById('matrixRain');
-            matrixRain.appendChild(canvas);
+            canvas.id = 'matrixCanvas';
+            document.getElementById('matrixRain').appendChild(canvas);
             
             const ctx = canvas.getContext('2d');
-            
-            // Set canvas dimensions
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             
-            // Set initial canvas background based on theme
-            const isLightMode = body.classList.contains('light-mode');
-            if (isLightMode) {
-                ctx.fillStyle = '#ffffff';
-            } else {
-                ctx.fillStyle = '#0d0d0d';
-            }
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Matrix characters
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*アァカサタナハマヤヤラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンঅআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহংঃ";
+            // Matrix characters - Katakana characters for authentic look
+            const chars = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const charArray = chars.split('');
             
-            const fontSize = 18; // Keep font size at 18px
-            const columns = canvas.width / fontSize; // Use full width coverage with no gaps between columns
+            // Font size and columns
+            const fontSize = 14;
+            const columns = Math.floor(canvas.width / fontSize);
             
-            // Generate a set of random speeds that will be reused cyclically
-            const speedOptions = [];
-            for (let s = 0; s < 10; s++) {
-                speedOptions.push(Math.random() * 3 + 1);
-            }
-            
-            // Create an array to track multiple characters per column
+            // Create streams - one for each column
             const streams = [];
+            const speedOptions = [0.5, 1, 1.5, 2]; // Different speeds for variation
             
+            // Initialize streams
             for (let i = 0; i < columns; i++) {
-                // Each column will have a stream of characters with random length (5-30 characters)
+                // Random stream length between 5 and 30 characters
                 const streamLength = Math.floor(Math.random() * 25) + 5;
-                // Pre-generate characters for this stream so they don't change randomly
-                const characters = [];
-                for (let k = 0; k < streamLength + 20; k++) { // Generate extra characters
-                    characters.push(charArray[Math.floor(Math.random() * charArray.length)]);
-                }
+                
                 streams[i] = {
                     // Starting position above the screen
                     y: Math.floor(Math.random() * -500),
@@ -805,10 +844,15 @@
                     // Speed of the stream (selected from predefined options)
                     speed: speedOptions[i % speedOptions.length],
                     // Pre-generated characters for consistency
-                    characters: characters,
+                    characters: [],
                     // Speed change counter
                     speedChangeCounter: Math.floor(Math.random() * 100) + 50
                 };
+                
+                // Pre-generate characters for this stream
+                for (let j = 0; j < streamLength; j++) {
+                    streams[i].characters.push(charArray[Math.floor(Math.random() * charArray.length)]);
+                }
             }
             
             // Draw function
@@ -832,9 +876,10 @@
                     ctx.shadowColor = 'rgba(144, 238, 144, 0.5)';
                     trailCharColor = 'rgba(144, 238, 144, '; // Base color for trail
                 } else {
-                    firstCharColor = 'rgba(0, 255, 180, 0.8)'; // Bright teal for dark mode
-                    ctx.shadowColor = 'rgba(0, 255, 180, 0.5)';
-                    trailCharColor = 'rgba(0, 220, 170, '; // Base color for trail
+                    // Teal color for dark mode - using the accent color #00d4a0
+                    firstCharColor = 'rgba(0, 212, 160, 0.9)'; // Teal for first character in dark mode
+                    ctx.shadowColor = 'rgba(0, 212, 160, 0.7)';
+                    trailCharColor = 'rgba(0, 212, 160, '; // Teal base color for trail in dark mode
                 }
                 
                 for (let i = 0; i < streams.length; i++) {
@@ -986,7 +1031,8 @@
                 nameText.style.textShadow = `0 0 ${glowValue}px #00d4a0, 0 0 ${glowValue*2}px #00d4a0, 0 0 ${glowValue*3}px #00d4a0, 0 0 ${glowValue*4}px #00d4a0`;
             }, 200);
             
-            // Animated typing effect for name
+            // Animated typing effect for name - REMOVED as per user request
+            /*
             const nameElement = document.getElementById('nameText');
             const nameTextContent = nameElement.textContent;
             nameElement.textContent = '';
@@ -1004,6 +1050,7 @@
             
             // Start typing effect after a short delay
             setTimeout(typeWriter, 1000);
+            */
         });
     </script>
 </body>
